@@ -3,7 +3,7 @@
 if(!defined('system_webscr') && basename($_SERVER['PHP_SELF']) == basename(__FILE__)) die('<h3>¡Acceso denegado!</h3>');
 
 // ini_set('memory_limit', '256M');
-
+ 
 ini_set("display_errors", system_debug);
 ini_set("error_reporting", system_debug);
 ini_set('short_open_tags', 'On');//short_open_tag (system_debug) ? 'On' : 'Off');
