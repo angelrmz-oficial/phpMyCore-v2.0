@@ -1,0 +1,46 @@
+<?php
+require 'laravel/functions_promises.php';
+require 'laravel/functions_include_promises.php';
+require 'laravel/functions.php';
+require 'laravel/functions_include.php';
+require 'laravel/UriResolver.php';
+require 'laravel/UriInterface.php';
+require 'laravel/Uri.php';
+require 'laravel/StreamInterface.php';
+require 'laravel/Stream.php';
+require 'laravel/AppendStream.php';
+require 'laravel/TaskQueueInterface.php';
+require 'laravel/TaskQueue.php';
+require 'laravel/PromiseInterface.php';
+require 'laravel/FulfilledPromise.php';
+require 'laravel/Promise.php';
+require 'laravel/MessageTrait.php';
+require 'laravel/MessageInterface.php';
+require 'laravel/RequestInterface.php';
+require 'laravel/Request.php';
+require 'laravel/RequestOptions.php';
+require 'laravel/PrepareBodyMiddleware.php';
+require 'laravel/RedirectMiddleware.php';
+require 'laravel/Middleware.php';
+require 'laravel/Handler/EasyHandle.php';
+require 'laravel/ResponseInterface.php';
+require 'laravel/Response.php';
+require 'laravel/Handler/StreamHandler.php';
+require 'laravel/Handler/CurlHandler.php';
+require 'laravel/Handler/CurlFactoryInterface.php';
+require 'laravel/Handler/CurlFactory.php';
+require 'laravel/Handler/CurlMultiHandler.php';
+require 'laravel/Handler/Proxy.php';
+require 'laravel/functions_guzzle.php';
+require 'laravel/functions_include_guzzle.php';
+require 'laravel/Exception/GuzzleException.php';
+require 'laravel/HandlerStack.php';
+require 'laravel/ClientInterface.php';
+require 'laravel/Client.php';
+
+require 'AuthyFormatException.php';
+require 'AuthyResponse.php';
+require 'AuthyToken.php';
+require 'AuthyUser.php';
+require 'AuthyApi.php';
+?>

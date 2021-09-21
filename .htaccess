@@ -1,0 +1,47 @@
+AddType x-mapp-php5 .php
+
+ErrorDocument 404 /error.php?error=404
+ErrorDocument 300 /error.php?error=300
+
+Options -MultiViews
+
+RewriteEngine On
+RewriteBase /
+
+DirectoryIndex index.php
+
+RewriteRule ^([a-zA-Z0-9-]*)$(|/) index.php?router=$1 [QSA]
+RewriteRule ^([a-zA-Z0-9-]*)/([a-zA-Z0-9-]*)$(|/) index.php?module=$1&router=$2 [QSA]
+
+RewriteRule ^api/([a-zA-Z0-9-]*)/([a-zA-Z0-9-]*)$(|/) ./app/request/index.php?requestype=api&class=$1&function=$2 [QSA]
+RewriteRule ^ws/([a-zA-Z0-9-]*)/([a-zA-Z0-9-]*)$(|/) ./app/request/index.php?requestype=ws&class=$1&function=$2 [QSA]
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php7_module>
+   php_flag display_errors Off
+   php_value max_execution_time 120
+   php_value max_input_time 60
+   php_value max_input_vars 10000
+   php_value memory_limit 1560M
+   php_value post_max_size 2048M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/tmp"
+   php_value upload_max_filesize 2048M
+   php_flag zlib.output_compression Off
+</IfModule>
+<IfModule lsapi_module>
+   php_flag display_errors Off
+   php_value max_execution_time 120
+   php_value max_input_time 60
+   php_value max_input_vars 10000
+   php_value memory_limit 1560M
+   php_value post_max_size 2048M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/tmp"
+   php_value upload_max_filesize 2048M
+   php_flag zlib.output_compression Off
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
