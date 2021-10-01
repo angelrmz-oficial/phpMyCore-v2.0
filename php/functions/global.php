@@ -161,7 +161,7 @@ function error_logs($desc = '')//$responseType = false
       error_clear_last();
     endif;
 
-    $html .= "If the problem persists, please report to the <a href='https://www.virtualhost.mx/forum'>forum</a></div>";
+    $html .= "If the problem persists, please report to the <a href='https://pmc.phpsoluciones.com/community'>forum</a></div>";
     /*if($note):
        $html .= '<div style="padding-left: 6ex;"></br><i>Note: '.$note.'</i></div></div>';
     else  */
@@ -170,7 +170,7 @@ function error_logs($desc = '')//$responseType = false
       $html .= '<span style="padding-left: 6ex;"></br><i>Note: '.mysqli_connect_error().'</i></span></div>';
     endif;*/
 
-    $html .= '<br><p style="text-align:center;font-size:12px;"><i>Copyright &copy 2016 CodeBridge powered by <a href="https://www.facebook.com/asrmdz">AngelRmz</a>. All rights reserved.</i></p></div>';
+    $html .= '<br><p style="text-align:center;font-size:12px;"><i>Copyright &copy 2016 phpMyCore powered by <a href="https://www.phpsoluciones.com">PHP Soluciones</a>. All rights reserved.</i></p></div>';
     ob_get_clean();
     array_push($app['logs'], array(
       'date' => date("d/m/y h:i"),

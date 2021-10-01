@@ -20,7 +20,7 @@ require '../../../init.php';
               <div class="card-body">
                 <form id="commentForm" method="post" data-provide="wizard" data-stay-complete="true" novalidate="true" data-on-next="callbackOnNext" data-on-previous="callbackOnPrevious" data-on-finish="callbackOnFinish">
                   <div id="rootwizard">
-                  
+
                   <ul class="nav nav-process nav-process-circle">
                     <li class="nav-item">
                       <center>
@@ -127,7 +127,7 @@ require '../../../init.php';
                       </div>
 
                       <div class="row bg-pale-secondary px-200 py-40">
-                      
+
                         <div class="custom-control custom-control-lg custom-checkbox">
                           <input type="checkbox" class="custom-control-input" id="site_redirect" name="site_redirect" <?= ($app['settings']['site_redirect'] === true) ? 'checked="checked"' : null; ?>>
                           <label class="custom-control-label" for="site_redirect"><code>Enable</code> URL access with forced redirect <em>(http/https)</em></label>
@@ -173,12 +173,12 @@ require '../../../init.php';
                         </div>
 
                         <div class="form-group row">
-                          <label class="col-form-label col-sm-4">Password*</label>
+                          <label class="col-form-label col-sm-4">Password</label>
                           <div class="form-control-plaintext input-group col-sm-8">
                           <div class="input-group-prepend">
                             <span class="input-group-text w-50px"><i class="fa fa-key"></i></span>
                           </div>
-                          <input type="password" class="form-control" id="pass" name="pass" placeholder="Password" value="" required>
+                          <input type="password" class="form-control" id="pass" name="pass" placeholder="Password" value="">
                           </div>
                         </div>
 
@@ -224,7 +224,7 @@ require '../../../init.php';
 <script>
 
       function callbackOnNext(tab, navigation, index) {
-        
+
         var btnext=$("button[data-wizard='next']");
         btnext.attr('disabled', 'disabled');
 
@@ -248,13 +248,13 @@ require '../../../init.php';
                 btnext.click();
               }, 1500);
             }
-            
+
           }, 'json');
-          
+
         }else if(index == 2){
-          $.post('postep.websettings.php', { 
-            site_name: $("#site_name").val(), 
-            site_theme:  $("#site_theme").val(), 
+          $.post('postep.websettings.php', {
+            site_name: $("#site_name").val(),
+            site_theme:  $("#site_theme").val(),
             site_url:  $("#site_url").val(),
             site_api:  $("#site_api").val(),
             site_ws:  $("#site_ws").val(),
@@ -273,12 +273,12 @@ require '../../../init.php';
                 btnext.click();
               }, 1500);
             }
-            
+
           }, 'json');
         }else if(index == 3){
-          $.post('postep.database.php', { 
-            server: $("#server").val(), 
-            port:  $("#port").val(), 
+          $.post('postep.database.php', {
+            server: $("#server").val(),
+            port:  $("#port").val(),
             username:  $("#user").val(),
             password:  $("#pass").val(),
             database:  $("#dbname").val()
@@ -296,10 +296,10 @@ require '../../../init.php';
                 btnext.click();
               }, 1500);
             }
-            
+
           }, 'json');
         }
-        
+
         btnext.removeAttr('disabled');
 
   		}
