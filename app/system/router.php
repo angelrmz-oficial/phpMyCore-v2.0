@@ -12,18 +12,18 @@ require 'tpl/head.php'; ?>
                 Select template
 
                     <span class="divider-line mx-1"></span>
-                    
+
                     <div class="dropdown">
                     <a class="btn btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><?= site_theme; ?></a>
                     <div class="dropdown-menu">
-                    
-                    <?php $tpls=array_diff(scandir(PATH_TPL), array('..', '.')); 
+
+                    <?php $tpls=array_diff(scandir(PATH_TPL), array('..', '.'));
                     foreach ($tpls as $tpl)
                         if($tpl !== site_theme)
                             echo '<a class="dropdown-item" href="javascript:var data = {site_theme: \''.$tpl.'\'};Form.Post(\'update_tpl\', data);">'.$tpl.'</a>';
                     ?>
                     </div>
-                    </div> 
+                    </div>
                 </div>
 
                 <div>
@@ -36,7 +36,7 @@ require 'tpl/head.php'; ?>
                 </div>
                 </header>
                 <div class="row">
-                    
+
                     <!--
                     <div class="col-12">
                         <form method="post" action="" class="card">
@@ -49,7 +49,7 @@ require 'tpl/head.php'; ?>
                                 <div class="form-group">
                                     <select class="form-control" name="selectpl" onchange="selectemplate(this.value)" data-provide="selectpicker">
                                     <option value="/">Crear nuevo tema</option>
-                                    <?php $tpls=array_diff(scandir(PATH_TPL), array('..', '.')); 
+                                    <?php $tpls=array_diff(scandir(PATH_TPL), array('..', '.'));
                                     if(!in_array(site_theme, $tpls))
                                         echo "<option value=\"".site_theme."\" selected>".site_theme."</option>";
                                     foreach ($tpls as $tpl)
@@ -83,11 +83,12 @@ require 'tpl/head.php'; ?>
 
                             <div class="card-body">
                             <div class="row form-type-material">
-                                
+
                                 <div class="col-12">
                                     <table id="routers" class="table">
                                         <thead>
                                             <tr>
+                                            <th scope="col">ID</th>
                                             <th scope="col">Route</th>
                                             <th scope="col">Page</th>
                                             <th scope="col">Parent</th>
@@ -106,6 +107,7 @@ require 'tpl/head.php'; ?>
                                             ?>
 
                                             <tr>
+                                            <td><?= $cgs['id']; ?></td>
                                             <td scope="row"><a href="<?= site_url . "/" . $router; ?>" target="_blank"><?= $router; ?></a></td>
                                             <td><?= $cgs['subtitle']; ?></td>
                                             <td><?= (new app)->getParentNameById($cgs['subid']); ?></td>
@@ -127,7 +129,7 @@ require 'tpl/head.php'; ?>
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                             </div>
 
                             </div>
@@ -179,14 +181,14 @@ require 'tpl/head.php'; ?>
           <div class="form-group">
             <select class="form-control" name="view">
                 <option value=" " selected>Ninguno</option>
-                <?php $views=preg_grep('~\.(php)$~', scandir(APP_TPL . 'views'));                
+                <?php $views=preg_grep('~\.(php)$~', scandir(APP_TPL . 'views'));
                 foreach ($views as $view)
                     echo '<option value="'.str_replace(".php", "", $view).'">'.str_replace(".php", "", $view).'</option>';
                 ?>
             </select>
             <label>Main View</label>
           </div>
-          
+
 
           <div class="form-group">
           <input type="text" class="form-control" name="submenu">
@@ -205,12 +207,12 @@ require 'tpl/head.php'; ?>
 
 
         </div>
-        
+
       </div>
 
       <footer class="p-12 flexbox flex-justified">
         <button class="btn btn-flat btn-secondary" type="button" data-toggle="quickview">Cancel</button>
-        
+
         <button class="btn btn-flat btn-primary" type="submit" name="router_add">Save changes</button>
       </footer>
     </form>
@@ -229,7 +231,7 @@ require 'tpl/head.php'; ?>
                 $("#templatename").hide();
 
                }
-            
+
            }*/
 
            $("#SearchRoute").keyup(function() {
@@ -240,7 +242,7 @@ require 'tpl/head.php'; ?>
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[0];
-                
+
                 if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -248,7 +250,7 @@ require 'tpl/head.php'; ?>
                 } else {
                     tr[i].style.display = "none";
                 }
-                }       
+                }
             }
            });
        </script>
