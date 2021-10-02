@@ -18,7 +18,7 @@ class app // extends AnotherClass
   function getParentNameById($id, $router = site_theme, $return = ""){
     foreach(json_decode(file_get_contents(PATH_TPL . $router . DS . 'router.json'), true) as $routerName => $cgs)
         if($cgs['id'] == $id)
-          $return = $cgs['subtitle'];// $routerName;
+          $return = $routerName;// $routerName;
 
     return $return;
   }
