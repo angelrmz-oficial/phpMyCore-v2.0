@@ -19,12 +19,12 @@ class router extends template
       $this->partial = false;
     endif;
 
+    if(isset($get['module']) && !empty($get['module'])):
+      $this->router=$get['module'] . DS . $this->router;
+    endif;
+
     $this->get=$get;
     $this->page = $this->settings();
-
-    if(isset($get['module']) && !empty($get['module'])):
-      $this->router=$get['module'] . DS .$this->router;
-    endif;
 
     //si es api
     (new sessions)->check($this->page['session']);
