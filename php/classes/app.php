@@ -46,7 +46,7 @@ class app // extends AnotherClass
     $routerJSON=json_decode(file_get_contents($routerFile), true);
 
     $routerJSON[$data['route']] = array (
-      "id" => count($routerJSON),
+      "id" => count($routerJSON) + 1,
       "subtitle" => trim($data['subtitle']),
       "submenu" => trim($data['submenu']),
       "subid" => empty(trim($data['subid'])) ? -1 : trim($data['subid']),
@@ -105,9 +105,9 @@ class app // extends AnotherClass
     foreach (array("assets", "modals", "pages", "statics", "views") as $folder)
       if( is_dir($base . $folder) === false )
         mkdir($base . $folder);
-    
+
     file_put_contents($base . 'assets' . DS . 'app.web.js', file_get_contents($this->app['pmc']['repository'] . "/templates/default/assets/app.web.js"));
-    //add views.. index, pages, iframe and 404? 
+    //add views.. index, pages, iframe and 404?
 
     $router='{
       "404":
