@@ -29,8 +29,8 @@ function rrmdir($dir) {
      $objects = scandir($dir);
      foreach ($objects as $object) {
        if ($object != "." && $object != "..") {
-         if (filetype($dir."/".$object) == "dir") 
-            rrmdir($dir."/".$object); 
+         if (filetype($dir."/".$object) == "dir")
+            rrmdir($dir."/".$object);
          else unlink   ($dir."/".$object);
        }
      }
@@ -38,5 +38,14 @@ function rrmdir($dir) {
      rmdir($dir);
    }
   }
-  
+
+  function folder_exist($folder)
+  {
+      // Get canonicalized absolute pathname
+      $path = realpath($folder);
+
+      // If it exist, check if it's a directory
+      return ($path !== false AND is_dir($path)) ? $path : false;
+  }
+
 ?>

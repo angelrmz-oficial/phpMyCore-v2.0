@@ -39,7 +39,7 @@ class app // extends AnotherClass
 
   }
 
-  function addroute($data){
+  function addroute($data, $tpldir = APP_TPL . 'pages' . DS){
 
     $routerFile=APP_TPL . 'router.json';
 
@@ -54,6 +54,20 @@ class app // extends AnotherClass
       "permission" => trim($data['permission']),
       "view" => trim($data['view'])
     );
+
+    if(strpos($data['route'], '/') !== false && $slash = explode('/', $data['route'])):
+      if(!folder_exist($tpldir . $slash[0])):
+        mkdir($tpldir . $slash[0]);
+      endif;
+
+      file_put_contents($tpldir . $slash[0] . DS . $slash[1] . '.php', '');
+
+    else:
+
+      file_put_contents($tpldir . $data['route'] . '.php', '');
+
+    endif;
+
 
     return (file_put_contents(APP_TPL . 'router.json', json_encode($routerJSON)) === FALSE) ? false : true;
 
