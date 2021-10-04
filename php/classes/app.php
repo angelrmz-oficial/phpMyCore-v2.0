@@ -62,7 +62,7 @@ class app // extends AnotherClass
 
       file_put_contents($tpldir . $slash[0] . DS . $slash[1] . '.php', '');
 
-    else:
+    elseif(!file_exists($tpldir . $data['route'] . '.php')):
 
       file_put_contents($tpldir . $data['route'] . '.php', '');
 
