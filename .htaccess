@@ -11,7 +11,7 @@ RewriteBase /
 DirectoryIndex index.php
 
 RewriteRule ^([a-zA-Z0-9-]*)$(|/) index.php?router=$1 [QSA]
-RewriteRule ^([a-zA-Z0-9-]*)/([a-zA-Z0-9-]*)$(|/) index.php?module=$1&router=$2 [QSA]
+RewriteRule ^([a-zA-Z0-9%-+]+)/([0-9a-zA-Z%-+']+)$ index.php?module=$1&router=$2 [QSA]
 
 RewriteRule ^api/([a-zA-Z0-9-]*)/([a-zA-Z0-9-]*)$(|/) ./app/request/index.php?requestype=api&class=$1&function=$2 [QSA]
 RewriteRule ^ws/([a-zA-Z0-9-]*)/([a-zA-Z0-9-]*)$(|/) ./app/request/index.php?requestype=ws&class=$1&function=$2 [QSA]
