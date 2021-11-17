@@ -21,104 +21,74 @@ var webApi = function(url, type, params=new FormData) {
 		//method: 'POST'
   });
 }
-// var Form = {
-//   Post: function(handler, formName, data = {}){
-//
-//   }
-// }
-//
-//
-// $.fn.extend({
-//     LoadTable: function (event, callback) {
-//        /*if (this.selector) {
-//             jQuery(document).on(event, this.selector, callback);
-//         }*/
-//         alert("ok");
-//         return this;
-//     }
-// });
 
-function LoadTable(table, id = false){
-  if(id)
-  {
-      var table = $("#"+table);
-  }
-
-  table.find('tbody').html('<tr><td colspan="9" align="center"><i class="fa fa-spinner fa-spin"></i> Cargando</td></tr>');
-  webApi(webapi_backend + table.data('api'), "json").then(function(data) {
-   //if (data.length > 0) {
-     table.find('tbody').html('');
-       table.DataTable({
-           responsive: true,
-           searching: true,
-           bLengthChange: !1,
-           destroy: !0,
-           info: !1,
-           sDom: '<"row view-filter"<"col-sm-12"<"float-left"l><"float-right"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>',
-           pageLength: 10,
-           language: {
-             paginate: {
-              previous: "<i class='fa fa-angle-left'></i>",
-              next: "<i class='fa fa-angle-right'></i>"
-            },
-            emptyTable: "<br/>No hay resultados que mostrar"
-           },
-           data: data,
-           drawCallback: function() {
-             $($(".dataTables_wrapper .pagination li:first-of-type")).find("a").addClass("prev"), $($(".dataTables_wrapper .pagination li:last-of-type")).find("a").addClass("next"), $(".dataTables_wrapper .pagination").addClass("pagination-sm");
-             var e = $(this).dataTable().api();
-             $("#pageCountDatatable span").html("Displaying " + parseInt(e.page.info().start + 1) + "-" + e.page.info().end + " of " + e.page.info().recordsTotal + " items")
-           }
-       });
-
-   //} //else {
-       //table.DataTable();//.clear().draw();
-   //}
- });
-}
-
-function cargarEmpresas(estado){
-
-  $(".empresas").empty().select2({
-    placeholder: "Cargando empresas...",
-    data: null
-});
-
-
-  var formData = new FormData;
-  formData.append('estado', estado);
-  webApi(webapi_backend + '/consulta/empresas', 'json', formData).done(function(r){
-    $(".empresas").select2('destroy').empty().select2({ data: r });
-  }).then(function(){
-
-  });
+var closeModal = function(id){
+  $("#"+id).modal('hide');
+  setTimeout(function(){
+    $(".modal-backdrop").remove();
+    $("#"+id).remove();
+  }, 1000);
 
 }
 
 $(document).ready(function() {
 
-/*
-  $('body').delegate('.nav-link','click',function(event){
-    var btn = $(this);
-
-  });*/
-
   $('body').delegate('.openModal','click',function(event){
     var btn = $(this);
     var defaultext=btn.html();
+
+    var handler = btn.data('handler');
+
     btn.attr('disabled', 'disabled');
     btn.html('Espere...');
     var formData = new FormData;
     $.each(btn.data('post'),function(key, value){
       formData.append(key, value);
     });
-    formData.append('modal', btn.data('modal'))
-    webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
-        $(r).modal();
-    }).then(function(){
-      btn.removeAttr('disabled');
-      btn.html(defaultext);
-    });
+    formData.append('modal', btn.data('modal'));
+
+    if (typeof handler !== 'undefined' && handler !== false) {
+      $.getScript( webapi_frontend + handler + ".js").done(function(){
+
+        //Handler.Request(btn)
+        if(Handler.Request() == "Yes"){
+          webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
+            // Handler.Response(r);
+            $(r).modal({backdrop: 'static', keyboard: false});
+            // Handler.Response();// esto lo pasamos al handler $(r).modal();
+
+          }).fail(function(){
+
+          }).then(function(){
+            btn.removeAttr('disabled');
+            btn.html(defaultext);
+
+            Handler.Response();// esto lo pasamos al handler $(r).modal();
+
+          });
+        }else{
+          btn.removeAttr('disabled');
+          btn.html(defaultext);
+        }
+      }).fail(function(){
+        webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
+           $(r).modal({backdrop: 'static', keyboard: false});
+        }).fail(function(){
+          console.log("fail");
+        }).then(function(){
+          btn.removeAttr('disabled');
+          btn.html(defaultext);
+        });
+      });
+
+    } else{
+      webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
+          $(r).modal({backdrop: 'static', keyboard: false});
+      }).then(function(){
+        btn.removeAttr('disabled');
+        btn.html(defaultext);
+      });
+    }
   });
 
   $('body').delegate('.postRequest','click',function(event){

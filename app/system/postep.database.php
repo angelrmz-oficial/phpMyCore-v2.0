@@ -19,6 +19,8 @@ if($app['pmc']['installed'] == false):
             `timestart` int(11) NOT NULL,
             `timexpire` int(11) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=latin1;")or die(json_encode(array("success" => false, "message" => "Can not connect to Database\nDetails: ". mysqli_error()), true));
+          //agregar super_admin, email,
+          /*date_created		date_deleted	status id_empleado*/
         mysqli_query($conn, "CREATE TABLE IF NOT EXISTS `users_data` (
             `id` int(11) NOT NULL,
             `username` varchar(250) NOT NULL,
@@ -62,9 +64,9 @@ if($app['pmc']['installed'] == false):
         $php_encode .= "define('mysql_password', '{$post['password']}');";
         $php_encode .= "define('mysql_dbname', '{$post['database']}');";
         $php_encode .= "define('mysql_port', {$post['port']}); ?>";
-        
+
         $put=file_put_contents(PATH_SYSTEM . "config.php", $php_encode)or die(json_encode(array("success" => false, "message" => "Error! Configuration file could not be created"), true));;//, FILE_APPEND);
-        
+
         $_SESSION['step']=4;
 
         echo json_encode(array("success" => true, "message" => "Database connected!"), true);
@@ -74,4 +76,3 @@ else:
 endif;
 
 ?>
-

@@ -38,9 +38,7 @@ class userData
   }
 
   function hasPermissions($permission){
-
-    return in_array($permission, $this->getPermissions()) ? true : false;
-
+    return ($this->data['super_admin'] == 1) ? true : (in_array($permission, $this->getPermissions()) ? true : false);
   }
 
 
@@ -62,6 +60,16 @@ class userData
 
     return $sso;
 
+  }
+
+  function log($info){
+    $myssql=new myssql;
+    $myssql->table="users_logs";
+    $myssql->params['id_usuario']=$this->userid;
+    $myssql->params['fecha']=date('d M Y H:i');
+    $myssql->params['log']=$info;
+    $myssql->FilterParams();
+    $myssql->insert();
   }
 
 }
