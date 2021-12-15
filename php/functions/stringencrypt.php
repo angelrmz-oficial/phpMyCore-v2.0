@@ -21,6 +21,12 @@ function string_decrypt($string, $key) {
    }
    return $result;
 }
+
+function countokens($delimiter, $field)
+{
+  $tokens = array_filter(explode($delimiter,$field),create_function('$a','return !empty($a);'));
+  return sizeof($tokens);
+}
 /*
 $cadena_encriptada = encrypt("LA CADENA A ENCRIPTAR","LA CLAVE");
 

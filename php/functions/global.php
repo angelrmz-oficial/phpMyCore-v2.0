@@ -1,6 +1,42 @@
 <?php
 if(!defined('system_webscr') && basename($_SERVER['PHP_SELF']) == basename(__FILE__)) die('<h3>¡Acceso denegado!</h3>');
 
+function array2readable($array, $separator, $last_separator) {
+    $result = preg_replace(strrev("/$separator/"),strrev($last_separator),strrev(implode($separator, $array)), 1);
+    return strrev($result);
+}
+
+function unixTime2text($time) {
+    $value['y'] = floor($time/31536000);
+    $value['w'] = floor(($time-($value['y']*31536000))/604800);
+    $value['d'] = floor(($time-($value['y']*31536000+$value['w']*604800))/86400);
+    $value['h'] = floor(($time-($value['y']*31536000+$value['w']*604800+$value['d']*86400))/3600);
+    $value['m'] = floor(($time-($value['y']*31536000+$value['w']*604800+$value['d']*86400+$value['h']*3600))/60);
+    $value['s'] = $time-($value['y']*31536000+$value['w']*604800+$value['d']*86400+$value['h']*3600+$value['m']*60);
+
+    $unit['y'] = 'año' . ($value['y'] > 1 ? 's' : '');
+    $unit['w'] = 'semana' . ($value['w'] > 1 ? 's' : '');
+    $unit['d'] = 'dia' . ($value['d'] > 1 ? 's' : '');
+    $unit['h'] = 'hora' . ($value['h'] > 1 ? 's' : '');
+    $unit['m'] = 'minuto' . ($value['m'] > 1 ? 's' : '');
+    $unit['s'] = 'segundo' . ($value['s'] > 1 ? 's' : '');
+
+    foreach($value as $key => $val) {
+        if (!empty($val)) {
+            $not_null_values[] .= $val . ' ' . $unit[$key];
+        }
+    }
+
+    return array2readable($not_null_values, ', ', ' y ');
+}
+
+function secondsToTime($seconds) {
+    $dtF = new \DateTime('@0');
+    $dtT = new \DateTime("@$seconds");
+    return $dtF->diff($dtT)->format('%h horas, %i minutos y %s segundos');
+}
+
+
 function safe_json_encode($value){
 if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
     $encoded = json_encode($value, JSON_PRETTY_PRINT);
