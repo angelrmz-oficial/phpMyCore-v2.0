@@ -31,7 +31,68 @@ var closeModal = function(id){
 
 }
 
+var form = {
+  serialize: function(form){
+    var formData = new FormData(form);
+    var checkboxs = $(this).find("input[type=checkbox]");
+    checkboxs.each(function(){ formData.delete($(this).attr('name')); });
+    checkboxs.each(function(){
+      formData.append($(this).attr('name'), $(this).is(':checked') ? "on" : "off");
+    });
+    return formData;
+  }
+}
+
 $(document).ready(function() {
+
+  var autocompleteInput = {};
+  $(".autocomplete").keydown(function(event){
+      autocompleteInput.button=$(this);
+  }).autocomplete({
+     source: function (request, response) {
+       var formData = new FormData;
+       formData.append('term', request.term);
+       webApi(webapi_backend + autocompleteInput.button.data('api'), "json", formData).then(response);
+     },
+     minLength: 1,
+     select: function( event, ui ) {
+       // consultar stock para max input ??
+       event.preventDefault();
+       var result=ui.item;
+       if(result.value !== "null"){
+          autocompleteInput.button.val(result.label);
+       } else{
+         autocompleteInput.button.val('');
+       }
+
+       var response = autocompleteInput.button.data('response');
+       if (typeof response !== 'undefined' && response !== false) {
+         func.autocompleteResponse(response, result);
+       }
+
+     },
+     open: function(event,ui){
+
+     },
+     search: function(){
+       var loading = autocompleteInput.button.data('loading');
+       if (typeof loading !== 'undefined' && loading !== false) {
+         autocompleteInput.loader = $("#"+ loading);
+         if(typeof autocompleteInput.loader !== 'undefined') {
+           autocompleteInput.loader.html('<i class="fa fa-spinner fa-spin"></i>');
+         }
+       }
+
+       var init = autocompleteInput.button.data('init');
+       if (typeof init !== 'undefined' && init !== false) {
+         func.autocompleteResponse(init);
+       }
+
+     },
+     response: function(){
+       autocompleteInput.loader.html('<i class="material-icons">search</i>');
+     }
+  });
 
   $('body').delegate('.openModal','click',function(event){
     var btn = $(this);
@@ -154,19 +215,14 @@ $(document).ready(function() {
 	    submit.attr('disabled', 'disabled');
 	    submit.val('Cargando...');
 		}
-    var formData = new FormData(this);
-    var checkboxs = $(this).find("input[type=checkbox]");
-    checkboxs.each(function(){ formData.delete($(this).attr('name')); });
-    checkboxs.each(function(){
-      formData.append($(this).attr('name'), $(this).is(':checked') ? "on" : "off");
-    });
 
     var handler=$(this).data('handler');
     var url = submit.data('external') ? submit.data('api') : webapi_backend + submit.data('api');
+    var formData = this;
 
     $.getScript( webapi_frontend + handler + ".js").done(function(){
       if(Handler.Request(submit) == "Yes"){
-        webApi(url, submit.data('type'), formData).done(function(r) {
+        webApi(url, submit.data('type'), form.serialize(formData)).done(function(r) {
           Handler.Response(r);
         }).fail(function(){
           alert("error");
@@ -203,7 +259,7 @@ $(document).ready(function() {
       }
 
     }).fail(function() {
-      webApi(url, submit.data('type'), formData).done(function(response) {
+      webApi(url, submit.data('type'), form.serialize(formData)).done(function(response) {
 
       }).fail(function(){
         alert("error");
