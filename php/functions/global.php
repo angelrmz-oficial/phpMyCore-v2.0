@@ -35,7 +35,14 @@ function secondsToTime($seconds) {
     $dtT = new \DateTime("@$seconds");
     return $dtF->diff($dtT)->format('%h horas, %i minutos y %s segundos');
 }
-
+function getStartAndEndDate($week, $year) {
+  $dto = new DateTime();
+  $dto->setISODate($year, $week);
+  $ret['week_start'] = $dto->format('Y-m-d');
+  $dto->modify('+6 days');
+  $ret['week_end'] = $dto->format('Y-m-d');
+  return $ret;
+}
 
 function safe_json_encode($value){
 if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
