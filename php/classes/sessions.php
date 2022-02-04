@@ -57,7 +57,7 @@ class sessions
   function check($require_session){
 
     $index=str_replace(str_replace('/', '\\', $_SERVER['DOCUMENT_ROOT']), '', PATH_ROOT) . 'index.php';
-    $scripts = array('/','/index');//str_replace('\\', '/', $index),
+    $scripts = array('/','/'. sessions_index);//str_replace('\\', '/', $index),
     //$scripts = array('/proyects/developed/index.php','/registro.php','/recuperar.php');
 
     if(!$require_session && isset($_SESSION['sessionId']) && in_array($_SERVER['REQUEST_URI'], $scripts)):
@@ -65,7 +65,7 @@ class sessions
     endif;
 
     if($require_session && !isset($_SESSION['sessionId'])):
-      redirect('index');
+      redirect(sessions_index);
     endif;
 
     if(isset($_SESSION['sessionId'])):

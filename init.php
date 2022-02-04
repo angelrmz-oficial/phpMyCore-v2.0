@@ -4,6 +4,7 @@ if(!defined('system_webscr') && basename($_SERVER['PHP_SELF']) == basename(__FIL
 
 define('system_hashpass', 'hae2UnBRuXr7Ao0t8ypdshWNRV2JBWfBSi'); //Sst1232145jp
 
+define('sessions_index', 'login');
 define('sessions_home', 'dashboard'); //edit in app??
 
 define('system_path', ''); // D:\Hosteos   /home/galaxycm/system
