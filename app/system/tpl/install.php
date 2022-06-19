@@ -18,7 +18,7 @@ require '../../../init.php';
         <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
-                <form id="commentForm" method="post" data-provide="wizard" data-stay-complete="true" novalidate="true" data-on-next="callbackOnNext" data-on-previous="callbackOnPrevious" data-on-finish="callbackOnFinish">
+                <form id="commentForm" method="post" data-provide="wizard" data-stay-complete="true" novalidate="true" data-on-next="callbackOnNext" data-on-previous="callbackOnPrevious" data-on-finish="callbackOnFinish" onkeydown="return event.key != 'Enter';">
                   <div id="rootwizard">
 
                   <ul class="nav nav-process nav-process-circle">
@@ -121,7 +121,7 @@ require '../../../init.php';
                           <div class="input-group-prepend">
                             <span class="input-group-text w-50px"><i class="fa fa-cogs"></i></span>
                           </div>
-                          <input type="url" class="form-control" name="site_ws" id="site_ws" placeholder="http://localhost/ws" value="<?= "{$current_url}/api"; ?>" required>
+                          <input type="url" class="form-control" name="site_ws" id="site_ws" placeholder="http://localhost/ws" value="<?= "{$current_url}/ws"; ?>" required>
                         </div>
 
                       </div>
