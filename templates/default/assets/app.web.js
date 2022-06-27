@@ -94,20 +94,7 @@ $(document).ready(function() {
      }
   });
 
-  $('body').delegate('.openModal','click',function(event){
-    var btn = $(this);
-    var defaultext=btn.html();
-
-    var handler = btn.data('handler');
-
-    btn.attr('disabled', 'disabled');
-    btn.html('Espere...');
-    var formData = new FormData;
-    $.each(btn.data('post'),function(key, value){
-      formData.append(key, value);
-    });
-    formData.append('modal', btn.data('modal'));
-
+  var openModal = function(formData = new FormData, handler = undefined, btn = null){
     if (typeof handler !== 'undefined' && handler !== false) {
       $.getScript( webapi_frontend + handler + ".js").done(function(){
 
@@ -127,7 +114,7 @@ $(document).ready(function() {
             Handler.Response();// esto lo pasamos al handler $(r).modal();
 
           });
-        }else{
+        }else if(btn !== null){
           btn.removeAttr('disabled');
           btn.html(defaultext);
         }
@@ -137,8 +124,10 @@ $(document).ready(function() {
         }).fail(function(){
           console.log("fail");
         }).then(function(){
-          btn.removeAttr('disabled');
-          btn.html(defaultext);
+          if(btn !== null){
+            btn.removeAttr('disabled');
+            btn.html(defaultext);
+          }
         });
       });
 
@@ -146,10 +135,30 @@ $(document).ready(function() {
       webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
           $(r).modal({backdrop: 'static', keyboard: false});
       }).then(function(){
-        btn.removeAttr('disabled');
-        btn.html(defaultext);
+        if(btn !== null){
+          btn.removeAttr('disabled');
+          btn.html(defaultext);
+        }
       });
     }
+  }
+
+  $('body').delegate('.openModal','click',function(event){
+    var btn = $(this);
+    var defaultext=btn.html();
+
+    var handler = btn.data('handler');
+
+    btn.attr('disabled', 'disabled');
+    btn.html('Espere...');
+    var formData = new FormData;
+    $.each(btn.data('post'),function(key, value){
+      formData.append(key, value);
+    });
+    formData.append('modal', btn.data('modal'));
+
+    openModal(formData, handler, btn);
+
   });
 
   $('body').delegate('.postRequest','click',function(event){
