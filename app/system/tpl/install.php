@@ -107,21 +107,21 @@ require '../../../init.php';
                           <div class="input-group-prepend">
                             <span class="input-group-text w-50px"><i class="fa fa-cog"></i></span>
                           </div>
-                          <input type="url" class="form-control" id="site_url" name="site_url" placeholder="http://localhost" value="<?= $current_url; ?>" required>
+                          <input type="text" class="form-control" id="site_url" name="site_url" placeholder="http://localhost" value="<?= $current_url; ?>">
                         </div>
 
                         <div class="form-group input-group col-sm-4">
                           <div class="input-group-prepend">
                             <span class="input-group-text w-50px"><i class="fa fa-cogs"></i></span>
                           </div>
-                          <input type="url" class="form-control" name="site_api" id="site_api" placeholder="http://localhost/api"  value="<?= "{$current_url}/api"; ?>" required>
+                          <input type="text" class="form-control" name="site_api" id="site_api" placeholder="http://localhost/api"  value="<?= "{$current_url}/api"; ?>" required>
                         </div>
 
                         <div class="form-group input-group col-sm-4">
                           <div class="input-group-prepend">
                             <span class="input-group-text w-50px"><i class="fa fa-cogs"></i></span>
                           </div>
-                          <input type="url" class="form-control" name="site_ws" id="site_ws" placeholder="http://localhost/ws" value="<?= "{$current_url}/ws"; ?>" required>
+                          <input type="text" class="form-control" name="site_ws" id="site_ws" placeholder="http://localhost/ws" value="<?= "{$current_url}/ws"; ?>" required>
                         </div>
 
                       </div>
