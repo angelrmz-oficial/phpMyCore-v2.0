@@ -9,7 +9,7 @@ require '../../../init.php';
     <div class="header-info">
         <h1 class="header-title">
         <strong>Setup</strong>
-        <small>We created an installation wizard to help you correctly configure some parameters necessary to start the framework. You can get more detailed information on the steps that the wizard follows to finish the installation.<br><br><a class="fs-12" href="https://pmc.angelrmz.com/docs" target="_blank">Official documentation</a></small>
+        <small>We created an installation wizard to help you correctly configure some parameters necessary to start the framework. You can get more detailed information on the steps that the wizard follows to finish the installation.<br><br><a class="fs-12" href="https://pmc.phpsoluciones.com/docs" target="_blank">Official documentation</a></small>
         </h1>
     </div>
 </header>
