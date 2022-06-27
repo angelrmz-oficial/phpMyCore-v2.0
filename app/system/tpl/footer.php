@@ -8,13 +8,13 @@
     <div class="col-md-6">
       <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
         <li class="nav-item">
-          <a class="nav-link" href="https://pmc.angelrmz.com/docs" target="_blank">Documentation</a>
+          <a class="nav-link" href="https://pmc.phpsoluciones.com/docs" target="_blank">Documentation</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="https://pmc.angelrmz.com/faq" target="_blank">FAQ</a>
+          <a class="nav-link" href="https://pmc.phpsoluciones.com/faq" target="_blank">FAQ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/angelrmz-oficial/phpMyCore" target="_blank">GitHub</a>
+          <a class="nav-link" href="https://github.com/angelrmz-oficial/phpMyCore-v2.0" target="_blank">GitHub</a>
         </li>
       </ul>
     </div>

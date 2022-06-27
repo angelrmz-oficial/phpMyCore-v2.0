@@ -390,7 +390,7 @@
 		                                </div>
 		                                <h4 class="feature-title m-0">Community</h4>
 									</div>
-	                                <p class="text-sm mb-0">If you wish, you can make your contribution to the development of this framework from <a href="https://github.com/angelrmz-oficial/pmc/">here</a></p>
+	                                <p class="text-sm mb-0">If you wish, you can make your contribution to the development of this framework from <a href="https://github.com/angelrmz-oficial/phpMyCore-v2.0/">here</a></p>
 	                            </div>
 	                        </div>
 						</div>
