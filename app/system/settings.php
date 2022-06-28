@@ -59,7 +59,7 @@ endif;
                                 <option value="<?= $charset; ?>" <?= ($charset == $app['settings']['system_charset']) ? 'selected="selected"' : null; ?>><?= $charset; ?></option>
                               <?php endforeach; ?>
                                                         </select>
-              
+
             </div>
   <br>
             <div class="input-group form-type-line">
@@ -71,9 +71,9 @@ endif;
                                 <option value="<?= $charset; ?>" <?= ($charset == $app['settings']['system_mysqlcharset']) ? 'selected="selected"' : null; ?>><?= $charset; ?></option>
                               <?php endforeach; ?>
                                                         </select>
-              
+
             </div>
-            
+
 
             <hr>
 
@@ -208,6 +208,23 @@ endif;
                   </div>
 
                   <button type="submit" name="mysqlbackup" class="btn btn-primary">Generar</button>
+                </form>
+
+              </div>
+            </div>
+
+            <div class="card">
+              <h4 class="card-title"><strong>Database Export</strong></h4>
+
+              <div class="card-body">
+
+                <form method="post" action="" class="form-inline">
+                  <div class="form-group">
+                    <label class="sr-only">Nombre del archivo:</label>
+                    <input type="text" class="form-control" name="backup_name" value="<?= mysql_dbname ?>_b<?= date("ymd") ?>" required placeholder="<?= mysql_dbname ?>_b<?= date("ymd") ?>">
+                  </div>
+
+                  <button type="submit" name="mysqlexport" class="btn btn-primary">Generar</button>
                 </form>
 
               </div>
