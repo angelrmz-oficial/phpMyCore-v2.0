@@ -53,6 +53,6 @@ $_functions[]='filesManager';
 foreach ($_functions as $function)
   (@include (PATH_FUNCTIONS ."{$function}.php"))or die("Can not find file '{$function}' in system functions");
 
-(@include (PATH_PHP . 'autoload.php'))or die(error_logs('autload no file'));
+(@include (PATH_PHP . 'autoload.php'))or die(error_logs('autoload no file'));
 
 ?>
