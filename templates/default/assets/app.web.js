@@ -1,4 +1,5 @@
 var webApi = function(url, type, params=new FormData) {
+  if (typeof token !== 'undefined' && token !== ''){ params.append('token', token); }
   params.append('response-type', type);
   return $.ajax({
   	url: url,

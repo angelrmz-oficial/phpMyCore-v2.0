@@ -3,13 +3,19 @@ if(!defined("system_webscr") && basename($_SERVER['PHP_SELF']) == basename(__FIL
 
 class WebApiRest
 {
-
+  //in template: $_SESSION['token'] = md5(uniqid(mt_rand(), true));
   public $error,$responseType;
 
   function __construct(){
-    global $get, $post;
+    global $get, $post; //$_SESSION ...
 
     $this->getResponseType($post['response-type']);
+
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    
+    if (!$token || $token !== $_SESSION['token']):
+      $this->set_error('Token inválido');
+    endif;
 
     $controllerName=$get['class'];
     $ControllerFile=REQUEST_DIR . "{$controllerName}.php";

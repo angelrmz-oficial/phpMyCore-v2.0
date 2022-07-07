@@ -27,4 +27,7 @@ if(isset($_POST['action'])  && strtoupper($_SERVER['REQUEST_METHOD']) == 'POST')
   //unset($_POST);
 endif;
 
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
+
+
 ?>

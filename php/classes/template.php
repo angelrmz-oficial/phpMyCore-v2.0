@@ -36,6 +36,8 @@ class template
 		$this->SetParam('resources', site_resources);
 		$this->SetParam('habboImaging', site_imaging);
 
+		$this->SetParam('token', isset($_SESSION['userid']) ? $_SESSION['token'] : '');
+
 		$this->SetParam('assets', site_url . "/templates/".site_theme."/assets");
 		// $this->SetParam('scripts', site_url . "/themes/". site_theme ."/assets/scripts/");
 		// $this->SetParam('modals', site_url . "/app/layout/".site_theme."/modals/");
@@ -44,7 +46,7 @@ class template
 		$this->SetParam('app_handler', site_url . "/app/request/handler/");
 
 		$this->SetParam('title', site_name);
-		
+
 		if(isset($this->page))
 			$this->SetParam('subtitle', $this->page['subtitle']);
 
