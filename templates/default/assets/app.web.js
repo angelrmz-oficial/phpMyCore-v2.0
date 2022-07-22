@@ -1,5 +1,7 @@
 var webApi = function(url, type, params=new FormData) {
-  if (typeof token !== 'undefined' && token !== ''){ params.append('token', token); }
+  if (typeof token !== 'undefined' && token !== ''){
+    params.append('token', token);
+  }
   params.append('response-type', type);
   return $.ajax({
   	url: url,
@@ -23,6 +25,67 @@ var webApi = function(url, type, params=new FormData) {
   });
 }
 
+var openModal = function(formData = new FormData, handler = undefined, btn = null, defaultext = null, modal = null){
+  if (typeof handler !== 'undefined' && handler !== false) {
+    $.getScript( webapi_frontend + handler + ".js").done(function(){
+
+      //Handler.Request(btn)
+      if(Handler.Request() == "Yes"){
+        webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
+          // Handler.Response(r);
+          modal = $(r);
+          modal.modal({backdrop: 'static', keyboard: false});
+          // Handler.Response();// esto lo pasamos al handler $(r).modal();
+
+        }).fail(function(){
+
+        }).then(function(){
+          if(btn !== null){
+            btn.removeAttr('disabled');
+            btn.html(defaultext);
+          }
+          //aun no lo reconoce
+
+          modal.on('shown.bs.modal', function (e) {
+            modal.find("select").each(function(){
+              if($(this).hasClass('select2')){
+                $(this).select2({theme:'bootstrap4'});
+              }
+            });
+            Handler.Response();// esto lo pasamos al handler $(r).modal();
+          });
+
+
+        });
+      }else if(btn !== null){
+        btn.removeAttr('disabled');
+        btn.html(defaultext);
+      }
+    }).fail(function(){
+      webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
+         $(r).modal({backdrop: 'static', keyboard: false});
+      }).fail(function(){
+        console.log("fail");
+      }).then(function(){
+        if(btn !== null){
+          btn.removeAttr('disabled');
+          btn.html(defaultext);
+        }
+      });
+    });
+
+  } else{
+    webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
+        $(r).modal({backdrop: 'static', keyboard: false});
+    }).then(function(){
+      if(btn !== null){
+        btn.removeAttr('disabled');
+        btn.html(defaultext);
+      }
+    });
+  }
+}
+
 var closeModal = function(id){
   $("#"+id).modal('hide');
   setTimeout(function(){
@@ -44,105 +107,75 @@ var form = {
   }
 }
 
-$(document).ready(function() {
+//dropdownParent: $(".modal")
+$('.select2').select2({
+  theme:'bootstrap4'
+});
+
+$('.datetime').datetimepicker({
+    format: 'yyyy-mm-dd'
+});
+
+$(document).ready(function(){
+
+/*  $('body').delegate('.select2','click',function(event){
+    $(this).select2({
+      theme:'bootstrap4'
+    });
+  });*/
 
   var autocompleteInput = {};
-  $(".autocomplete").keydown(function(event){
-      autocompleteInput.button=$(this);
-  }).autocomplete({
-     source: function (request, response) {
-       var formData = new FormData;
-       formData.append('term', request.term);
-       webApi(webapi_backend + autocompleteInput.button.data('api'), "json", formData).then(response);
-     },
-     minLength: 1,
-     select: function( event, ui ) {
-       // consultar stock para max input ??
-       event.preventDefault();
-       var result=ui.item;
-       if(result.value !== "null"){
-          autocompleteInput.button.val(result.label);
-       } else{
-         autocompleteInput.button.val('');
-       }
 
-       var response = autocompleteInput.button.data('response');
-       if (typeof response !== 'undefined' && response !== false) {
-         func.autocompleteResponse(response, result);
-       }
+  $('body').delegate('.autocomplete','keydown',function(event){
+    autocompleteInput.button=$(this);
+    autocompleteInput.button.autocomplete({
+       source: function (request, response) {
+         var formData = new FormData;
+         formData.append('term', request.term);
+         webApi(webapi_backend + autocompleteInput.button.data('api'), "json", formData).then(response);
+       },
+       minLength: 1,
+       select: function( event, ui ) {
+         // consultar stock para max input ??
+         event.preventDefault();
+         var result=ui.item;
+         if(result.value !== "null"){
+            autocompleteInput.button.val(result.label);
+         } else{
+           autocompleteInput.button.val('');
+         }
 
-     },
-     open: function(event,ui){
+         var response = autocompleteInput.button.data('response');
+         if (typeof response !== 'undefined' && response !== false) {
+           func.autocompleteResponse(response, result);
+         }
 
-     },
-     search: function(){
-       var loading = autocompleteInput.button.data('loading');
-       if (typeof loading !== 'undefined' && loading !== false) {
-         autocompleteInput.loader = $("#"+ loading);
-         if(typeof autocompleteInput.loader !== 'undefined') {
-           autocompleteInput.loader.html('<i class="fa fa-spinner fa-spin"></i>');
+       },
+       open: function(event,ui){
+         console.log("se ejecuto delegate");
+       },
+       search: function(){
+         var loading = autocompleteInput.button.data('loading');
+         if (typeof loading !== 'undefined' && loading !== false) {
+           autocompleteInput.loader = $("#"+ loading);
+           if(typeof autocompleteInput.loader !== 'undefined') {
+             autocompleteInput.loader.html('<i class="fa fa-spinner fa-spin"></i>');
+           }
+         }
+
+         var init = autocompleteInput.button.data('init');
+         if (typeof init !== 'undefined' && init !== false) {
+           func.autocompleteResponse(init);
+         }
+
+       },
+       response: function(){
+         if (typeof autocompleteInput.loader !== 'undefined' && autocompleteInput.loader !== false) {
+           autocompleteInput.loader.html('<i class="fa fa-search"></i>');
          }
        }
-
-       var init = autocompleteInput.button.data('init');
-       if (typeof init !== 'undefined' && init !== false) {
-         func.autocompleteResponse(init);
-       }
-
-     },
-     response: function(){
-       autocompleteInput.loader.html('<i class="material-icons">search</i>');
-     }
+    }).autocomplete( "widget" ).css('z-index', '9999999');
   });
-
-  var openModal = function(formData = new FormData, handler = undefined, btn = null){
-    if (typeof handler !== 'undefined' && handler !== false) {
-      $.getScript( webapi_frontend + handler + ".js").done(function(){
-
-        //Handler.Request(btn)
-        if(Handler.Request() == "Yes"){
-          webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
-            // Handler.Response(r);
-            $(r).modal({backdrop: 'static', keyboard: false});
-            // Handler.Response();// esto lo pasamos al handler $(r).modal();
-
-          }).fail(function(){
-
-          }).then(function(){
-            btn.removeAttr('disabled');
-            btn.html(defaultext);
-
-            Handler.Response();// esto lo pasamos al handler $(r).modal();
-
-          });
-        }else if(btn !== null){
-          btn.removeAttr('disabled');
-          btn.html(defaultext);
-        }
-      }).fail(function(){
-        webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
-           $(r).modal({backdrop: 'static', keyboard: false});
-        }).fail(function(){
-          console.log("fail");
-        }).then(function(){
-          if(btn !== null){
-            btn.removeAttr('disabled');
-            btn.html(defaultext);
-          }
-        });
-      });
-
-    } else{
-      webApi(webapi_backend + '/load/modal', 'html', formData).done(function(r){
-          $(r).modal({backdrop: 'static', keyboard: false});
-      }).then(function(){
-        if(btn !== null){
-          btn.removeAttr('disabled');
-          btn.html(defaultext);
-        }
-      });
-    }
-  }
 
   $('body').delegate('.openModal','click',function(event){
     var btn = $(this);
@@ -158,7 +191,7 @@ $(document).ready(function() {
     });
     formData.append('modal', btn.data('modal'));
 
-    openModal(formData, handler, btn);
+    openModal(formData, handler, btn, defaultext);
 
   });
 
@@ -204,8 +237,9 @@ $(document).ready(function() {
   });
 
   $('body').delegate('form','submit',function(event){
+
     if($(this).attr("action") !== ""){
-      return false;
+      return true;
     }
 
     var submit = $(this).find('button[type=submit]');
